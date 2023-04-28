@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-uppercase mb-0">All authors:</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table no-wrap user-table mb-0">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="border-0 text-uppercase font-medium pl-4">#id</th>
+                      <th scope="col" class="border-0 text-uppercase font-smmall">Full name</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Books</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for s_author in data %}
+                    <tr>
+                      <td class="pl-4">{{ s_author.id }}</td>
+                      <td>
+                          <small class="text-muted">{{ s_author.name }} {{ s_author.patronymic }} {{ s_author.surname }}</small>
+                      </td>
+                      <td>
+                          {% for book in s_author.books.all %}
+                            <a href="/book/{{ book.id }}"><span class="badge badge-primary badge-pill">detail</span></a> → <small class="text-muted">{{ book.name }}</small><hr>
+                          {% endfor %}
+                      </td>
+                      <td>
+                          <a href="/author/remove_author/{{ s_author.id }}"><span class="badge badge-primary badge-pill badge-danger">remove</span></a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <a href="/author/create_author" class="btn btn-primary">
+                Create author
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

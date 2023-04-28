@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-uppercase mb-0">All users:</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table no-wrap user-table mb-0">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="border-0 text-uppercase font-medium pl-4">#id</th>
+                      <th scope="col" class="border-0 text-uppercase font-smmall">Full name</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Role</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Created</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for s_user in data %}
+                    <tr>
+                      <td class="pl-4">{{ s_user.id }}</td>
+                      <td>
+                          <small class="text-muted">{{ s_user.first_name }} {{ s_user.middle_name }} {{ s_user.last_name }}</small>
+                      </td>
+                      <td>
+                            {% if s_user.role == 0 %}
+                          <small class="text-muted">user</small>
+                            {% else %}
+                          <small class="text-muted">librarian</small>
+                            {% endif %}
+                      </td>
+                      <td>
+                          <small class="text-muted">{{ s_user.email }}</small>
+                      </td>
+                      <td>
+                          <small class="text-muted">{{ s_user.created_at }}</small>
+                      </td>
+                      <td>
+                          <a href="/user/{{ s_user.id }}"><span class="badge badge-primary badge-pill">detail</span></a>
+                      </td>
+
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                {% if user.role == 1 %}
+                <h5 class="card-title text-uppercase mb-0">All orders:</h5>
+                {% else %}
+                <h5 class="card-title text-uppercase mb-0">My orders:</h5>
+                {% endif %}
+            </div>
+            <div class="table-responsive">
+                <table class="table no-wrap user-table mb-0">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="border-0 text-uppercase font-medium pl-4">#id</th>
+                      <th scope="col" class="border-0 text-uppercase font-smmall">User name</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Book</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Created at</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">End at</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium">Plated end at</th>
+                      <th scope="col" class="border-0 text-uppercase font-medium"></th>
+                        <th scope="col" class="border-0 text-uppercase font-medium"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for s_order in data %}
+                    <tr>
+                      <td class="pl-4">{{ s_order.id }}</td>
+                      <td>
+                          <small class="text-muted">{{ s_order.user_full_name }}</small>
+                      </td>
+                      <td>
+                          <small class="text-muted">{{ s_order.book_name }}</small>
+                      </td>
+                      <td>
+                          <small class="text-muted">{{ s_order.created_at }}</small>
+                      </td>
+                      <td>
+                          <small class="text-muted">{{ s_order.end_at }}</small>
+                      </td>
+                      <td>
+                          <small class="text-muted">{{ s_order.plated_end_at }}</small>
+                      </td>
+                      <td>
+                          {% if not s_order.end_at %}
+                          {% if user.role == 1 %}
+                            <a href="/order/remove_order/{{ s_order.id }}"><small class="badge badge-primary badge-pill badge-danger">close</small></a>
+                          {% endif %}
+                          {% else %}
+                            <small><span class="badge badge-secondary badge-pill">closed</span></small>
+                          {% endif %}
+                      </td>
+
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <a href="/order/create_order" class="btn btn-primary">
+                Create order
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

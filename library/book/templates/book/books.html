@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load tag_library %}
+
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase mb-0">All books:</h5>
+                    <hr>
+                    <a href="/book/all_books"><span class="badge badge-primary badge-pill badge-info">origin</span></a>
+                    <small><a href="/book/all_books/name"><span class="badge badge-primary badge-pill badge-warning">order by name</span></a></small>
+                    <small><a href="/book/all_books/description"><span class="badge badge-primary badge-pill badge-warning">order by description</span></a></small>
+                    <small><a href="/book/all_books/count"><span class="badge badge-primary badge-pill badge-warning">order by count</span></a></small>
+                    <hr>
+                    <form class="form-inline" action="/book/all_books/filter/" id="filter" method="POST">
+                        <div class="form-group mx-sm-1 mb-1">
+                            {{ form.word }}
+                        </div>
+                        <div class="form-group mx-sm-1 mb-1">
+                            {% csrf_token %}
+                            <button type="submit" class="badge badge-success" style=" border: 0px; font-size:11px;">
+                                search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap user-table mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="border-0 text-uppercase font-medium pl-4">#id</th>
+                            <th scope="col" class="border-0 text-uppercase font-smmall">Name</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Description</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Count</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Authors</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for s_book in data %}
+                        <tr>
+                            <td class="pl-4">
+                                <small class="text-muted">{{ spec_word|highlight_text:s_book.id }}</small>
+                            </td>
+                            <td>
+                                <small class="text-muted">{{ spec_word|highlight_text:s_book.name }}</small>
+                            </td>
+                            <td>
+                                <small class="text-muted">{{ spec_word|highlight_text:s_book.description }}</small>
+                            </td>
+                            <td>
+                                <small class="text-muted">{{ spec_word|highlight_text:s_book.count }}</small>
+                            </td>
+                            <td>
+                                {% for author in s_book.authors.all %}
+                                    <small class="text-muted">{{ spec_word|highlight_text:author.name }} {{ spec_word|highlight_text:author.patronymic }} {{ spec_word|highlight_text:author.surname }}</small>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="/book/{{ s_book.id }}"><span class="badge badge-primary badge-pill">detail</span></a>
+                            </td>
+                            <td>
+                                {% if user.role == 1 %}
+                                    <a href="/book/remove_book/{{ s_book.id }}"><span class="badge badge-danger badge-pill">remove</span></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if user.role == 1 %}
+                    <a href="/book/create_book" class="btn btn-primary">Create book</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://i.ibb.co/k2C8hT7/books-icon-book-icon-circle-11553431973yntj8dl6ls.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{ selected_book.name }}</h4>
+                      {% if user.role == 1 %}
+                        <a href="/book/remove_book/{{ selected_book.id }}"><span class="badge badge-danger badge-pill">remove</span></a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ selected_book.name }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Description</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ selected_book.description }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Count</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ selected_book.count }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Author</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {% for author in selected_book.authors.all %}
+                          {{ author.name }} {{ author.patronymic }} {{ author.surname }}
+                      {% endfor %}
+                    </div>
+                  </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}

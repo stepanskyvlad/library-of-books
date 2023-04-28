@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<section class="vh-100 gradient-custom">
+  <div class="container py-10 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-4">Create new order</h3>
+            <form action="" method="POST">
+              <div class="col-md-10 mb-2">
+                <div class="form-group">
+                  {{form.user}}
+                  <label for="exampleFormControlSelect1">{{form.user.label}}</label>
+                </div>
+              </div>
+              <div class="col-md-10 mb-2">
+                <div class="form-group">
+                  {{form.book}}
+                  <label for="exampleFormControlSelect1">{{form.book.label}}</label>
+                </div>
+              </div>
+              <div class="col-md-10 mb-2">
+                {{form.plated_end_at}}
+                <label for="plated_end_at">{{form.plated_end_at.label}}</label>
+              </div>
+              </div>
+              <div class="mt-0 pt-2">
+                {% csrf_token %}
+                <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
